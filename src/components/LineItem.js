@@ -33,7 +33,7 @@ export default (props) => {
 						<div key={`${lineItem.title}` + i} className="lineItemDiv">
 							<div className="Line-item__img">
 								{lineItem.variant.image ? (
-									<img
+									<img width="100%"
 										src={lineItem.variant.image.src}
 										alt={`${lineItem.title} product shot`}
 									/>

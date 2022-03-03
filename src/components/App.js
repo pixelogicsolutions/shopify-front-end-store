@@ -9,6 +9,8 @@ import { Container } from "react-bootstrap"
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default (props) => {
+	
+
 	const {
 		createShop,
 		createCheckout,
@@ -20,8 +22,12 @@ export default (props) => {
 		createShop()
 		fetchProducts()
 		createCheckout()
+		
 		//fetchCollection()
 	}, [])
+
+
+
 
 	return (
 		<Router>

@@ -9,9 +9,12 @@ import {getProducts,
     handleCartClose,
     handleCartOpen,
     handleSetCount,
+	getCheckout,
     addVariantToCart,
     updateQuantityInCart,
     removeLineItemInCart,} from "../Shopify.action"
+
+
 
 export function useShopify() {
 	const dispatch = useDispatch()
@@ -27,6 +30,7 @@ export function useShopify() {
 	const fetchCollections = () => dispatch(getAllCollection())
 	const fetchProduct = (id) => dispatch(getProduct(id))
     const fetchCollection = (id) => dispatch(getCollection(id))
+	const fetchCheckout = (id) => dispatch(getCheckout(id))
 	const createCheckout = () => dispatch(checkout())
 	const createShop = () => dispatch(shopInfo())
 	const closeCart = () => dispatch(handleCartClose())
@@ -60,6 +64,7 @@ export function useShopify() {
 		updateQuantity,
 		removeLineItem,
 		setCount,
-		fetchCollections
+		fetchCollections,
+		fetchCheckout
 	}
 }

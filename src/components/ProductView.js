@@ -17,6 +17,7 @@ export default (props) => {
 	const [size, setSize] = useState("")
 	const [quantity, setQuantity] = useState(1)
 
+
 	const description = product.description && product.description.split(".")
 
 	function changeSize(sizeId, quantity) {
@@ -28,6 +29,7 @@ export default (props) => {
 			]
 			const checkoutId = checkoutState.id
 			addVariant(checkoutId, lineItemsToAdd)
+			
 		} else {
 			const lineItemsToAdd = [
 				{ variantId: sizeId, quantity: parseInt(quantity, 10) },
@@ -42,11 +44,14 @@ export default (props) => {
 	}, [id])
 
 
+
+
+
 	return (
 		<>
 		<Header/>
 		<div className="container">
-			<div className="row mt-3 mb-3">
+			<div className="row mt-5 mb-3">
 				<div className=" col image-fixed-scroll">					
 					{product.images &&
 						product.images.map((image, i) => {
@@ -63,7 +68,7 @@ export default (props) => {
 						})}
 						
 				</div>
-				<div className="col Product__info">
+				<div className="col Product__info mx-3">
 					<h2 className="Product__title2">{product.title}</h2>
 					<ul className="Product__description">
 						{description &&
@@ -71,15 +76,20 @@ export default (props) => {
 								return <li key={`line-description +${i}`}>{each}</li>
 							})}
 					</ul>
-					<div>
-						<label htmlFor={"prodOptions"}>Size</label>
+					<div className="row mx-3 ">
+
+					<div className="col"> 
+					<div class="mb-3 input-group">
+						<span class="input-group-text">Size</span>
 						<select
 							id="prodOptions"
+							className="form-select form-select"
 							name={size}
 							onChange={(e) => {
 								setSize(e.target.value)
 							}}
 						>
+							
 							{product.variants &&
 								product.variants.map((item, i) => {
 									return (
@@ -91,27 +101,36 @@ export default (props) => {
 								})}
 						</select>
 					</div>
-					<div>
-						<label>Quantity</label>
+					</div>
+					
+					
+
+					<div className="col ">
+					<div class="mb-3 input-group">
+						<span class="input-group-text">Qty</span>
 						<input
-							className="quantity"
+							className="quantity form-control"
 							type="number"
 							min={1}
 							value={quantity}
 							onChange={(e) => {
 								setQuantity(e.target.value)
 							}}
+							
 						></input>
+						</div>
 					</div>
 					<h3 className="Product__price">
 						${product.variants && product.variants[0].price}
 					</h3>
+					
 					<button
 						className="prodBuy button"
 						onClick={(e) => changeSize(size, quantity)}
 					>
 						Add to Cart
 					</button>
+				</div>
 				</div>
 			</div>
 		</div>

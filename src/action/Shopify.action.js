@@ -56,7 +56,7 @@ export const  getAllCollection = async ()=> {
 
  //Gets a  collection based on that collection's id
 
-export const  getCollection =(id)=> {
+export const  getCollection = (id) => {
 	const collectionId = id
 	return (dispatch) => {
 		client.collection.fetchWithProducts(collectionId).then((resp) => {
@@ -68,10 +68,25 @@ export const  getCollection =(id)=> {
  	}
  }
 
+
+ export const getCheckout = async (checkoutId) => {
+	return async (dispatch) => {
+      await client.checkout.fetch(checkoutId).then((checkout) => {
+        dispatch({
+				type: CHECKOUT_FOUND,
+				payload: checkout,
+			})
+      })
+      .catch((err) => console.log(err));
+	}
+  };
+
+
 // Creates initial checkout state from Shopify
 export const checkout = () => {
 	return (dispatch) => {
 		client.checkout.create().then((resp) => {
+			localStorage.setItem("checkout", checkout.resp);
 			dispatch({
 				type: CHECKOUT_FOUND,
 				payload: resp,

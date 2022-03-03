@@ -5,8 +5,13 @@ import { useShopify } from "../action/help/shopify.help"
 // eslint-disable-next-line import/no-anonymous-default-export
 export default (props) => {
 
-	const { products,  fetchProduct } = useShopify()
-    const [filteredata, setFilterdata] = useState([])
+	const { products, product, fetchProduct, openCart,	checkoutState,	addVariant, } = useShopify()
+    const [filteredata, setFilterdata, ] = useState([])
+
+	const defaultSize = product.variants && product.variants[0].id.toString()
+	const [size, setSize] = useState("")
+	const [quantity, setQuantity] = useState(1)
+
 
 	useEffect(() => {
 		setFilterdata(products)
@@ -32,15 +37,25 @@ export default (props) => {
 		})
 		
 	}
-const filterResult =(title) =>{
+	const filterResult =(title) =>{
 
-	const result = products.filter((curData)=>{
-		return curData.title === title
-	})
-	setFilterdata(result)
-}
+		const result = products.filter((curData)=>{
+			return curData.title === title
+		})
+		setFilterdata(result)
+	}
 	
-
+	function changeSize(sizeId, quantity) {
+		openCart()
+		
+			sizeId = defaultSize
+			const lineItemsToAdd = [
+				{ variantId: sizeId, quantity: parseInt(quantity, 10) },
+			]
+			const checkoutId = checkoutState.id
+			addVariant(checkoutId, lineItemsToAdd)
+		
+	}
 
 
 	return (
@@ -50,8 +65,17 @@ const filterResult =(title) =>{
 				<div className="col ">
 					<button className='button' onClick={()=>filterResult('MEN')}> Men </button> <button className='button' onClick={()=>filterResult('Women')}> Women </button>
 				</div>
-				<div className="col">
+				<div className="col text-end">
 
+				<select name="sources" id="sources" class="custom-select sources button" placeholder="Source Type">
+				<option value="hide">Sort by values</option>  
+					<option value="office_0">Relevance</option>  
+					<option value="office_1">Title</option>
+					<option value="office_2">Recently Updated</option>
+					<option value="office_2">Product Ventor</option>
+					<option value="office_2">Product Type</option>
+				</select>
+			
 
 				</div>
 				</div>
@@ -61,7 +85,7 @@ const filterResult =(title) =>{
 
 {filteredata.map((collection) => {
 
-                  return collection.products.slice(0, visiblejobs).map((product,i) => (
+                  return collection.products.map((product,i) => (
                     <div className="col-md-3 mb-5"  key={product.id + i} >
                         <div> 
                             <img src={product.images[0]?.src  ?  product.images[0].src  :  ""  } alt="" width="100%"/>
@@ -75,7 +99,7 @@ const filterResult =(title) =>{
 						{product.variants.title ? product.variants.title : "no title "}
 						</div>
 						</div>
-                         <div className="row mt-2 mb-2">
+                        {/*<div className="row mt-2 mb-2">
 						 	{product.variants[0].selectedOptions[1]?.value ? product.variants[0].selectedOptions[1].value : ""}
 						 </div>
 						<div className="row">
@@ -86,21 +110,22 @@ const filterResult =(title) =>{
 										{product.variants[0].selectedOptions[1]?.value ? <label className="btn btn-outline-primary" for="btnradio1"> {product.variants[0].selectedOptions[1].value }</label>: ""}
 									</div>
 								</div>
-							</div>
-
+							</div>*/}
+							<button
+						className="prodBuy button"
+						onClick={(e) => changeSize(size, quantity)}
+					>
+						Add to Cart
+					</button>
                         <button className="Product__buy button"	onClick={(e) => handleClick(e, product.id)}	>
-								Add to Cart
+								view Details
 						</button>
 
                     </div> 
                    ))
                 })}
 
-				<div className="col-lg-12">
-					<div className="browse-all-cat">
-						<a title="" className="button" onClick={loadMore}>Load more listings</a>
-					</div>
-					</div>
+				
 				
 				</div>
 				</>

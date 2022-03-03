@@ -27,16 +27,16 @@ export default (props) => {
                 <span className='cart-indicator'>0</span>
             </div>
         </div>
-      
-         <div className="pt-3 pb-3 justify-content-md-center">
-            <div className='col'> </div>
-            <div className="text-center"> 
-                <img src="images/hulk-apps-logo.svg" alt="Hulk App" className='logo' />
+        <div className='container'> 
+         <div className=" row pt-3 pb-3 justify-content-md-center">
+            <div className=" col text-center"> 
+            <a href="/" title="Hulkapp" > <img src="images/hulk-apps-logo.svg" alt="Hulk App" className='logo' /></a>
                 <h1 className='pb-3 mb-3'>{shopDetails.name}</h1>
                 <p className='pb-3 mb-3'>{shopDetails.description}</p>
-
+                </div>
             </div>
-            <div></div>
+            <div>
+          </div>
         </div>
 
     </Container>
